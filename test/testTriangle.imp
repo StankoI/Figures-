@@ -1,0 +1,71 @@
+// #include <limits>
+#include "doctest.h"
+#include "../include/triangle.hpp"
+
+TEST_CASE("Perimeter is calculated correct for triangle")
+{
+    const double EPSILON = 0.000001;
+
+    Triangle a(11, 20, 30);
+
+    CHECK(std::abs(a.perimeter() - 61) < EPSILON);
+
+    Triangle b(5, 7, 9);
+
+    CHECK(std::abs(b.perimeter() - 21) < EPSILON);
+
+    Triangle c(3.12, 5.32, 7.28);
+    double t = 3.12 + 5.32 + 7.28;
+    CHECK(std::abs(c.perimeter() - t) < EPSILON);
+}
+
+TEST_CASE("Constructor throws std::invalid_argument with correct message for Triangle")
+{
+    CHECK_THROWS_AS(Triangle(-2, 3, 4), std::invalid_argument);
+    CHECK_THROWS_WITH_AS(Triangle(-2, 3, 4), "Side lengths must be positive", std::invalid_argument);
+
+    CHECK_THROWS_AS(Triangle(2, -3, 4), std::invalid_argument);
+    CHECK_THROWS_WITH_AS(Triangle(2, -3, 4), "Side lengths must be positive", std::invalid_argument);
+
+    CHECK_THROWS_AS(Triangle(2, 3, -4), std::invalid_argument);
+    CHECK_THROWS_WITH_AS(Triangle(-2, 3, -4), "Side lengths must be positive", std::invalid_argument);
+
+    CHECK_THROWS_AS(Triangle(1, 10, 20), std::invalid_argument);
+    CHECK_THROWS_WITH_AS(Triangle(1, 10, 20), "The length of one side cannot be greater than or equal to the sum of the other two sides", std::invalid_argument);
+    
+    CHECK_THROWS_AS(Triangle(10, 1, 20), std::invalid_argument);
+    CHECK_THROWS_WITH_AS(Triangle(10, 1, 20), "The length of one side cannot be greater than or equal to the sum of the other two sides", std::invalid_argument);
+
+    CHECK_THROWS_AS(Triangle(10, 20, 1), std::invalid_argument);
+    CHECK_THROWS_WITH_AS(Triangle(10, 20, 1), "The length of one side cannot be greater than or equal to the sum of the other two sides", std::invalid_argument);
+}
+
+
+TEST_CASE("Constructor throws std::overflow_error with correct message for Triangle")
+{
+    CHECK_THROWS_AS(Triangle(1, 2, std::numeric_limits<double>::max()), std::overflow_error);
+
+    CHECK_THROWS_WITH_AS(Triangle(1, 2, std::numeric_limits<double>::max()), "Sum of the sides exceeds the maximum allowable value for a double", std::overflow_error);
+}
+
+TEST_CASE("to_string returns correct messige")
+{
+    Triangle a(5,6,7);
+    CHECK(a.to_string() == "triangle 5.000000 6.000000 7.000000");
+
+    Triangle b(3.12, 5.32, 7.28);
+    CHECK(b.to_string() == "triangle 3.120000 5.320000 7.280000");
+
+}
+
+TEST_CASE("cloning figure works corectly")
+{
+    Triangle a(5,6,7);
+
+    Figure* b = a.clone();
+
+    CHECK(b->to_string() == a.to_string());
+    CHECK(b->perimeter() == a.perimeter());
+}
+
+

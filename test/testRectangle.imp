@@ -1,0 +1,61 @@
+#include "doctest.h"
+#include "../include/rectangle.hpp"
+#include <iostream>
+// #include <limits>
+
+TEST_CASE("Perimeter is calculated correct for Rectangle")
+{
+    const double EPSILON = 0.000001;
+
+    Rectangle a(3, 12);
+
+    CHECK(std::abs(a.perimeter() - 30) < EPSILON);
+
+    Rectangle b(10, 7);
+
+    CHECK(std::abs(b.perimeter() - 34) < EPSILON);
+
+    Rectangle c(5.12, 11.32);
+    double t = 2*(5.12 + 11.32);
+    CHECK(std::abs(c.perimeter() - t) < EPSILON);
+}
+
+TEST_CASE("Constructor throws std::invalid_argument with correct message for Rectangle")
+{
+    CHECK_THROWS_AS(Rectangle(-2, 7), std::invalid_argument);
+
+    CHECK_THROWS_WITH_AS(Rectangle(-2, 7), "Side lengths must be positive", std::invalid_argument);
+
+    CHECK_THROWS_AS(Rectangle(5, -16), std::invalid_argument);
+
+    CHECK_THROWS_WITH_AS(Rectangle(5, -16), "Side lengths must be positive", std::invalid_argument);
+   
+}
+
+TEST_CASE("Constructor throws std::overflow_error with correct message for Rectangle")
+{
+    CHECK_THROWS_AS(Rectangle(1.1, std::numeric_limits<double>::max()), std::overflow_error);
+
+    CHECK_THROWS_WITH_AS(Rectangle(1.1, std::numeric_limits<double>::max()), "Sum of the sides exceeds the maximum allowable value for a double", std::overflow_error);
+    
+    CHECK_THROWS_AS(Rectangle(std::numeric_limits<double>::max(), 2.0 ), std::overflow_error);
+
+    CHECK_THROWS_WITH_AS(Rectangle(std::numeric_limits<double>::max(), 2.0), "Sum of the sides exceeds the maximum allowable value for a double", std::overflow_error);
+}
+
+TEST_CASE("to_string returns correct messige")
+{
+    Rectangle a(5,6); 
+
+    CHECK(a.to_string() == "rectangle 5.000000 6.000000");
+}
+
+TEST_CASE("cloning figure works corectly")
+{
+    Rectangle a(5,6);
+
+    Figure* b = a.clone();
+
+    CHECK(b->to_string() == a.to_string());
+    CHECK(b->perimeter() == a.perimeter());
+}

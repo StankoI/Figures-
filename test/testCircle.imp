@@ -1,0 +1,55 @@
+#define DOCTEST_CONFIG_IMPLEMENT
+#include<iostream>
+#include"../include/circle.hpp"
+#include"doctest.h"
+
+TEST_CASE("Perimeter is calculated correct for circle")
+{
+
+    const double EPSILON = 0.000001;
+
+    Circle c(2);
+    CHECK(std::abs(c.perimeter() - 2*2*3.14) < EPSILON);
+
+    Circle d(3);
+    CHECK(std::abs(d.perimeter() - 2*3*3.14) < EPSILON);
+
+    Circle e(15);
+    CHECK(std::abs(e.perimeter() - 2*15*3.14) < EPSILON);
+
+    Circle j(3.12);
+    CHECK(std::abs(j.perimeter() - 2*3.12*3.14) < EPSILON);
+ 
+}
+
+TEST_CASE("Constructor throws std::invalid_argument with correct message for Circle") {
+    CHECK_THROWS_AS(Circle(-2), std::invalid_argument); // Check that the exception is thrown
+
+    // Verify the exception message
+    CHECK_THROWS_WITH_AS(Circle(-2), "Radius lengths must be positive", std::invalid_argument);
+}
+
+TEST_CASE("Constructor throws std::overflow_error with correct message")
+{
+    CHECK_THROWS_AS(Circle(std::numeric_limits<double>::max()), std::overflow_error); 
+
+    CHECK_THROWS_WITH_AS(Circle(std::numeric_limits<double>::max()), "Radius is too big", std::overflow_error);
+
+}
+
+TEST_CASE("to_string returns correct messige")
+{
+    Circle a(5);
+
+    CHECK(a.to_string() == "circle 5.000000");
+}
+
+TEST_CASE("cloning figure works corectly")
+{
+    Circle a(5);
+
+    Figure* b = a.clone();
+
+    CHECK(b->to_string() == a.to_string());
+    CHECK(b->perimeter() == a.perimeter());
+}

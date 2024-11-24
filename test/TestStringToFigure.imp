@@ -1,0 +1,122 @@
+#include "doctest.h"
+#include "../include/StringToFigure.hpp"
+
+TEST_CASE("Parsing valid triangle from string")
+{
+    StringToFigure STF;
+
+    std::unique_ptr<Figure> figure1 = STF.stringToFigure("triangle 3 4 5");
+
+    REQUIRE(figure1 != nullptr);
+    CHECK(figure1->to_string() == "triangle 3.000000 4.000000 5.000000");
+
+    std::unique_ptr<Figure> figure2 = STF.stringToFigure("triangle 12 13 14");
+
+    REQUIRE(figure2 != nullptr);
+    CHECK(figure2->to_string() == "triangle 12.000000 13.000000 14.000000");
+
+    std::unique_ptr<Figure> figure3 = STF.stringToFigure("triangle 12.000000 13.000000 14.000000");
+
+    REQUIRE(figure3 != nullptr);
+    CHECK(figure3->to_string() == "triangle 12.000000 13.000000 14.000000");
+
+}
+
+TEST_CASE("Parsing valid rectangle from string")
+{
+    StringToFigure STF;
+
+    std::unique_ptr<Figure> figure1 = STF.stringToFigure("rectangle 10 4");
+
+    REQUIRE(figure1 != nullptr);
+    CHECK(figure1->to_string() == "rectangle 10.000000 4.000000");
+
+    std::unique_ptr<Figure> figure2 = STF.stringToFigure("rectangle 17 12");
+
+    REQUIRE(figure2 != nullptr);
+    CHECK(figure2->to_string() == "rectangle 17.000000 12.000000");
+
+}
+
+TEST_CASE("Parsing valid circle from string")
+{
+    StringToFigure STF;
+
+    std::unique_ptr<Figure> figure1 = STF.stringToFigure("circle 2.2");
+
+    REQUIRE(figure1 != nullptr);
+    CHECK(figure1->to_string() == "circle 2.200000");
+
+    std::unique_ptr<Figure> figure2 = STF.stringToFigure("circle 12");
+
+    REQUIRE(figure2 != nullptr);
+    CHECK(figure2->to_string() == "circle 12.000000");
+}
+
+TEST_CASE("StringToFigure throws std::invalid_argument with correct message for Triangle")
+{
+    StringToFigure STF;
+
+    CHECK_THROWS_AS(STF.stringToFigure(""), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure(""), "empty string", std::invalid_argument);
+
+    CHECK_THROWS_AS(STF.stringToFigure(" "), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure(" "), "fugure does not exist", std::invalid_argument); 
+    
+    CHECK_THROWS_AS(STF.stringToFigure("triangle 3 4"), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure("triangle 3 4"), "Error creating triangle: number of arguments is invalid", std::invalid_argument);
+
+    CHECK_THROWS_AS(STF.stringToFigure("triangle 3 abc 5"), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure("triangle 3 abc 5"), "Invalid value in input string", std::invalid_argument);
+
+    CHECK_THROWS_AS(STF.stringToFigure("triangle 3 4 -5"), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure("triangle 3 4 -5"), "Error creating triangle: Side lengths must be positive", std::invalid_argument);
+
+    CHECK_THROWS_AS(STF.stringToFigure("triangle 3 4 a"), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure("triangle 3 4 a"), "Invalid value in input string", std::invalid_argument);
+
+    CHECK_THROWS_AS(STF.stringToFigure("triangle 3 -2 a"), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure("triangle 3 -2 a"), "Invalid value in input string", std::invalid_argument);
+
+    CHECK_THROWS_AS(STF.stringToFigure("unknown 3 4 5"), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure("unknown 3 4 5"), "fugure does not exist", std::invalid_argument);
+}
+
+TEST_CASE("StringToFigure throws std::invalid_argument with correct message for Rectangle")
+{
+    StringToFigure STF;
+    
+    CHECK_THROWS_AS(STF.stringToFigure("rectangle 3"), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure("rectangle 3"), "Error creating rectangle: number of arguments is invalid", std::invalid_argument);
+
+    CHECK_THROWS_AS(STF.stringToFigure("rectangle 3 abc"), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure("rectangle 3 abc"), "Invalid value in input string", std::invalid_argument);
+
+    CHECK_THROWS_AS(STF.stringToFigure("rectangle 3 -5"), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure("rectangle 3 -5"), "Error creating rectangle: Side lengths must be positive", std::invalid_argument);
+
+    CHECK_THROWS_AS(STF.stringToFigure("rectangle -2 a"), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure("rectangle -2 a"), "Invalid value in input string", std::invalid_argument);
+
+    CHECK_THROWS_AS(STF.stringToFigure("unknown 3 5"), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure("unknown 3 5"), "fugure does not exist", std::invalid_argument);
+}
+
+TEST_CASE("StringToFigure throws std::invalid_argument with correct message for Circle")
+{
+    StringToFigure STF;
+    
+    CHECK_THROWS_AS(STF.stringToFigure("circle 3 5"), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure("circle 3 5"), "Error creating circle: number of arguments is invalid", std::invalid_argument);
+
+    CHECK_THROWS_AS(STF.stringToFigure("circle a"), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure("circle a"), "Invalid value in input string", std::invalid_argument);
+
+    CHECK_THROWS_AS(STF.stringToFigure("circle -5"), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure("circle -5"), "Error creating circle: Radius lengths must be positive", std::invalid_argument);
+
+    CHECK_THROWS_AS(STF.stringToFigure("unknown 5"), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure("unknown 5"), "fugure does not exist", std::invalid_argument);
+}
+
+

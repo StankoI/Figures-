@@ -1,11 +1,10 @@
 #include <iostream>
-#include "include/rectangle.hpp"
-#include "include/triangle.hpp"
-#include "include/circle.hpp"
+#include "include/stringToFigure.hpp"
 
 
 int main()
 {
     
+
     return 0;
 }

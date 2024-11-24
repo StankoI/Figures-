@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include<iostream>
-#include"../include/circle.hpp"
+#include"../include/Circle.hpp"
 #include"doctest.h"
 
 TEST_CASE("Perimeter is calculated correct for circle")
@@ -8,25 +8,40 @@ TEST_CASE("Perimeter is calculated correct for circle")
 
     const double EPSILON = 0.000001;
 
+    const double pi = 3.14;
+
     Circle c(2);
-    CHECK(std::abs(c.perimeter() - 2*2*3.14) < EPSILON);
+    CHECK(std::abs(c.perimeter() - 2*2*pi) < EPSILON);
 
     Circle d(3);
-    CHECK(std::abs(d.perimeter() - 2*3*3.14) < EPSILON);
+    CHECK(std::abs(d.perimeter() - 2*3*pi) < EPSILON);
 
     Circle e(15);
-    CHECK(std::abs(e.perimeter() - 2*15*3.14) < EPSILON);
+    CHECK(std::abs(e.perimeter() - 2*15*pi) < EPSILON);
 
     Circle j(3.12);
-    CHECK(std::abs(j.perimeter() - 2*3.12*3.14) < EPSILON);
+    CHECK(std::abs(j.perimeter() - 2*3.12*pi) < EPSILON);
+
+    Circle f((std::vector<double>){7});
+    CHECK(std::abs(f.perimeter() - 2*7*pi) < EPSILON);
+
+
  
 }
 
 TEST_CASE("Constructor throws std::invalid_argument with correct message for Circle") {
-    CHECK_THROWS_AS(Circle(-2), std::invalid_argument); // Check that the exception is thrown
+    
+    CHECK_THROWS_AS(Circle(-2), std::invalid_argument); 
 
-    // Verify the exception message
     CHECK_THROWS_WITH_AS(Circle(-2), "Radius lengths must be positive", std::invalid_argument);
+    
+    CHECK_THROWS_AS(Circle({4,5}), std::invalid_argument); 
+
+    CHECK_THROWS_WITH_AS(Circle({4,5}), "number of arguments is invalid" , std::invalid_argument);
+
+    CHECK_THROWS_AS(Circle((std::vector<double>){-5}), std::invalid_argument); 
+
+    CHECK_THROWS_WITH_AS(Circle((std::vector<double>){-5}), "Radius lengths must be positive", std::invalid_argument);
 }
 
 TEST_CASE("Constructor throws std::overflow_error with correct message")
@@ -52,4 +67,6 @@ TEST_CASE("cloning figure works corectly")
 
     CHECK(b->to_string() == a.to_string());
     CHECK(b->perimeter() == a.perimeter());
+
+    CHECK(&a != b);
 }

@@ -1,7 +1,48 @@
-#include "../include/triangle.hpp"
+#include "../include/Triangle.hpp"
+
+void Triangle::validator(double a, double b, double c)
+{
+    if (a <= 0 || b <= 0 || c <= 0)
+    {
+        throw std::invalid_argument("Side lengths must be positive");
+    }
+
+    if (a + b > std::numeric_limits<double>::max() - c)
+    {
+        throw std::overflow_error("Sum of the sides exceeds the maximum allowable value for a double");
+    }
+
+    if (a + b <= c || c + a <= b || b + c <= a)
+    {
+        throw std::invalid_argument("The length of one side cannot be greater than or equal to the sum of the other two sides");
+    }
+}
 
 Triangle::Triangle(double a, double b, double c)
 {
+    try{
+        validator(a,b,c);
+    }
+    catch(std::exception& e)
+    {
+        throw;
+    }
+
+    this->sideA = a;
+    this->sideB = b;
+    this->sideC = c;
+}
+
+Triangle::Triangle(const std::vector<double>& v)
+{
+    if(v.size() != 3)
+    {
+        throw std::invalid_argument("number of arguments is invalid");
+    }
+
+    double a = v[0];
+    double b = v[1];
+    double c = v[2];
 
     if (a <= 0 || b <= 0 || c <= 0)
     {

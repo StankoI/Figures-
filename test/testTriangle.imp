@@ -1,6 +1,6 @@
 // #include <limits>
-#include "doctest.h"
-#include "../include/triangle.hpp"
+// #include "doctest.h"
+#include "../include/Triangle.hpp"
 
 TEST_CASE("Perimeter is calculated correct for triangle")
 {
@@ -17,6 +17,10 @@ TEST_CASE("Perimeter is calculated correct for triangle")
     Triangle c(3.12, 5.32, 7.28);
     double t = 3.12 + 5.32 + 7.28;
     CHECK(std::abs(c.perimeter() - t) < EPSILON);
+
+    Triangle d((std::vector<double>){3,4,5});
+
+    CHECK(std::abs(d.perimeter() - 12) < EPSILON);
 }
 
 TEST_CASE("Constructor throws std::invalid_argument with correct message for Triangle")
@@ -38,6 +42,15 @@ TEST_CASE("Constructor throws std::invalid_argument with correct message for Tri
 
     CHECK_THROWS_AS(Triangle(10, 20, 1), std::invalid_argument);
     CHECK_THROWS_WITH_AS(Triangle(10, 20, 1), "The length of one side cannot be greater than or equal to the sum of the other two sides", std::invalid_argument);
+
+    CHECK_THROWS_AS(Triangle((std::vector<double>){10, 20, 1}), std::invalid_argument);
+    CHECK_THROWS_WITH_AS(Triangle((std::vector<double>){10, 20, 1}), "The length of one side cannot be greater than or equal to the sum of the other two sides", std::invalid_argument);
+
+    CHECK_THROWS_AS(Triangle((std::vector<double>){10, 20}), std::invalid_argument);
+    CHECK_THROWS_WITH_AS(Triangle((std::vector<double>){10, 20}), "number of arguments is invalid" , std::invalid_argument);
+
+    CHECK_THROWS_AS(Triangle((std::vector<double>){2,3,-4}), std::invalid_argument);
+    CHECK_THROWS_WITH_AS(Triangle((std::vector<double>){2,3,-4}), "Side lengths must be positive", std::invalid_argument);
 }
 
 
@@ -66,6 +79,8 @@ TEST_CASE("cloning figure works corectly")
 
     CHECK(b->to_string() == a.to_string());
     CHECK(b->perimeter() == a.perimeter());
+
+    CHECK(&a != b);
 }
 
 

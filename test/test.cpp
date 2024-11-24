@@ -1,6 +1,8 @@
-#include "testRectangle.imp"
-#include "testCircle.imp"
-#include "testTriangle.imp"
+#include "doctest.h"
+#include "TestRectangle.imp"
+#include "TestCircle.imp"
+#include "TestTriangle.imp"
+#include "TestStringToFigure.imp"
 
 int main()
 {

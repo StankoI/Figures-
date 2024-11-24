@@ -1,6 +1,6 @@
-#include "../include/rectangle.hpp"
+#include "../include/Rectangle.hpp"
 
-Rectangle::Rectangle(double a, double b)
+void Rectangle::validator(double a, double b)
 {
     if(a <= 0 || b <= 0)
     {
@@ -11,9 +11,39 @@ Rectangle::Rectangle(double a, double b)
     {
         throw std::overflow_error("Sum of the sides exceeds the maximum allowable value for a double");
     }
+}
+
+Rectangle::Rectangle(double a, double b)
+{
+    try{
+        validator(a,b);
+    }
+    catch(std::exception &e)
+    {
+        throw;
+    }
 
     this->sideA = a;
     this->sideB = b;
+}
+
+Rectangle::Rectangle(const std::vector<double>& v)
+{
+    if(v.size() != 2)
+    {
+        throw std::invalid_argument("number of arguments is invalid");
+    }
+
+    try{
+        validator(v[0],v[1]);
+    }
+    catch(std::exception &e)
+    {
+        throw;
+    }
+
+    this->sideA = v[0];
+    this->sideB = v[1];
 }
 
 double Rectangle::perimeter() const

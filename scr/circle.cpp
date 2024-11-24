@@ -1,7 +1,7 @@
-#include "../include/circle.hpp"
+#include "../include/Circle.hpp"
 
-Circle::Circle(double r)
-{ 
+void Circle::validator(double r)
+{
     if (r <= 0)
     {
         throw std::invalid_argument("Radius lengths must be positive");
@@ -13,8 +13,38 @@ Circle::Circle(double r)
     {
         throw std::overflow_error("Radius is too big");
     }
+}
+
+Circle::Circle(double r)
+{ 
+    try{
+        validator(r);
+    }
+    catch(std::exception &e)
+    {
+        throw;
+    }
 
     this->radius = r;
+}
+
+Circle::Circle(const std::vector<double>& v)
+{
+    if(v.size() != 1)
+    {
+        throw std::invalid_argument("number of arguments is invalid");
+    }
+
+    try
+    {
+        validator(v[0]);
+    }
+    catch(const std::exception& e)
+    {
+        throw;
+    }
+
+    this->radius = v[0];
 }
 
 double Circle::perimeter() const

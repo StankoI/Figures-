@@ -56,7 +56,7 @@ std::unique_ptr<Figure> StringToFigure::stringToFigure(std::string str) const
 
     double tmp;
     while (stream >> tmp)
-    {                          
+    {                      
         params.push_back(tmp);
     }
 

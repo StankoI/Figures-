@@ -3,6 +3,8 @@
 #include "TestCircle.imp"
 #include "TestTriangle.imp"
 #include "TestStringToFigure.imp"
+#include "TestFigureFromStream.imp"
+#include "TestRandomFigure.imp"
 
 int main()
 {

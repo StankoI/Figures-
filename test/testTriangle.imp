@@ -1,5 +1,5 @@
 // #include <limits>
-// #include "doctest.h"
+#include "doctest.h"
 #include "../include/Triangle.hpp"
 
 TEST_CASE("Perimeter is calculated correct for triangle")

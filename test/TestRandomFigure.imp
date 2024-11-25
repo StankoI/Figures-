@@ -1,0 +1,68 @@
+#include "doctest.h"
+#include "../include/FigureRandom.hpp"
+
+TEST_CASE("Testing random")
+{
+    FigureRandom FR(100);
+    srand(time(NULL));
+
+    const int N = 100;
+
+    int circleCount = 0;
+    int rectangleCount = 0;
+    int triangleCount = 0;
+
+    for(int i = 0; i < N; i++)  
+    {
+        std::unique_ptr<Figure> ptr = FR.create();
+        std::istringstream stream(ptr->to_string());
+
+        std::string tmp;
+
+        stream >> tmp;
+
+        if(tmp == "triangle")
+        {
+            triangleCount++;
+            double a,b,c;
+            stream >> a >> b >> c;
+
+            CHECK(a >= 5 );
+            CHECK(a <= 9.9);
+            CHECK(b >= 5 );
+            CHECK(b <= 9.9);
+            CHECK(c >= 5 );
+            CHECK(c <= 9.9);
+
+        }
+        if(tmp == "rectangle")
+        {
+            rectangleCount++;
+            double a,b;
+            stream >> a >> b;
+            CHECK(b >= 5 );
+            CHECK(b <= 9.9);
+            CHECK(b >= 5 );
+            CHECK(b <= 9.9);
+
+        }
+        if(tmp == "circle")
+        {
+            circleCount++;
+            double a;
+            stream >> a;
+            CHECK(a >= 5 );
+            CHECK(a <= 9.9);
+        }
+
+    }
+
+    CHECK(circleCount >= N/4);
+    CHECK(rectangleCount >= N/4);
+    CHECK(triangleCount >= N/4);
+
+    CHECK(circleCount <= N/2);
+    CHECK(rectangleCount <= N/2);
+    CHECK(triangleCount <= N/2);
+
+}

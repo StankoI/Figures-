@@ -66,8 +66,8 @@ TEST_CASE("StringToFigure throws std::invalid_argument with correct message for 
     CHECK_THROWS_AS(STF.stringToFigure("triangle 3 4"), std::invalid_argument); 
     CHECK_THROWS_WITH_AS(STF.stringToFigure("triangle 3 4"), "Error creating triangle: number of arguments is invalid", std::invalid_argument);
 
-    CHECK_THROWS_AS(STF.stringToFigure("triangle 3 abc 5"), std::invalid_argument); 
-    CHECK_THROWS_WITH_AS(STF.stringToFigure("triangle 3 abc 5"), "Invalid value in input string", std::invalid_argument);
+    CHECK_THROWS_AS(STF.stringToFigure("triangle 3 5 abc"), std::invalid_argument); 
+    CHECK_THROWS_WITH_AS(STF.stringToFigure("triangle 3 5 abc"), "Invalid value in input string", std::invalid_argument);
 
     CHECK_THROWS_AS(STF.stringToFigure("triangle 3 4 -5"), std::invalid_argument); 
     CHECK_THROWS_WITH_AS(STF.stringToFigure("triangle 3 4 -5"), "Error creating triangle: Side lengths must be positive", std::invalid_argument);

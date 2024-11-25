@@ -1,0 +1,48 @@
+#include "doctest.h"
+#include "../include/FigureFromStream.hpp"
+
+TEST_CASE("FigureFromStream returns correct figure")
+{
+    std::string a = "triangle 3 4 5 \n rectangle 3 4 \n rectangle 4 5 \n circle 3 \n";
+    
+    std::istringstream stream(a);
+
+    FigureFromStream FFS((std::fstream&)stream);
+
+    std::unique_ptr<Figure> figure1 = FFS.create();
+
+    REQUIRE(figure1 != nullptr);
+    CHECK(figure1->to_string() == "triangle 3.000000 4.000000 5.000000");
+
+    std::unique_ptr<Figure> figure2 = FFS.create();
+
+    REQUIRE(figure2 != nullptr);
+    CHECK(figure2->to_string() == "rectangle 3.000000 4.000000");
+
+    std::unique_ptr<Figure> figure3 = FFS.create();
+
+    REQUIRE(figure3 != nullptr);
+    CHECK(figure3->to_string() == "rectangle 4.000000 5.000000");
+
+    std::unique_ptr<Figure> figure4 = FFS.create();
+
+    REQUIRE(figure4 != nullptr);
+    CHECK(figure4->to_string() == "circle 3.000000");
+
+}
+
+TEST_CASE("FigureFromStream throw exeption with correct messige")
+{
+    std::string a = "triangle 3 4 abc \n rectangle 3 abc \n rectangle abc 5 \n circle lk \n circle -2";
+
+    std::istringstream stream(a);
+
+    FigureFromStream FFS((std::fstream&)stream);
+
+    CHECK_THROWS_WITH_AS(FFS.create(), "Invalid value in input string", std::invalid_argument);
+    CHECK_THROWS_WITH_AS(FFS.create(), "Invalid value in input string", std::invalid_argument);
+    CHECK_THROWS_WITH_AS(FFS.create(), "Invalid value in input string", std::invalid_argument);
+    CHECK_THROWS_WITH_AS(FFS.create(), "Invalid value in input string", std::invalid_argument);
+    CHECK_THROWS_WITH_AS(FFS.create(), "Error creating circle: Radius lengths must be positive", std::invalid_argument);
+
+}

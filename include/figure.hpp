@@ -3,6 +3,8 @@
 #include <limits>
 #include <string>
 #include <vector>
+#include <cstdlib> 
+#include <ctime>
 #include "StringConvertable.hpp"
 #include "Cloneable.hpp"
 

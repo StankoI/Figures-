@@ -7,7 +7,7 @@ TEST_CASE("FigureFromStream returns correct figure")
     
     std::istringstream stream(a);
 
-    FigureFromStream FFS((std::fstream&)stream);
+    FigureFromStream FFS(stream);
 
     std::unique_ptr<Figure> figure1 = FFS.create();
 
@@ -37,7 +37,7 @@ TEST_CASE("FigureFromStream throw exeption with correct messige")
 
     std::istringstream stream(a);
 
-    FigureFromStream FFS((std::fstream&)stream);
+    FigureFromStream FFS(stream);
 
     CHECK_THROWS_WITH_AS(FFS.create(), "Invalid value in input string", std::invalid_argument);
     CHECK_THROWS_WITH_AS(FFS.create(), "Invalid value in input string", std::invalid_argument);

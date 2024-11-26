@@ -1,18 +1,20 @@
 #include <iostream>
-#include "include/FigureRandom.hpp"
+#include "include/AbstractFactory.hpp"
 #include <fstream>
 #include <string>
 
 int main()
 {   
+    AbstractFactory AF;
 
-    // FigureRandom FR(6);
-    // srand(time(NULL));
-    // for(int i = 0; i < 12; i++)
-    // {   
-    //     std::unique_ptr<Figure> ptr = FR.create();
-    //     std::cout << ptr->to_string() << '\n';
-    // }
-    
+    std::unique_ptr<FigureFactory> ptr = AF.createFactory("stream file.txt");
+
+    std::unique_ptr<Figure> figure1 = ptr->create();
+
+    std::cout << figure1->to_string();
+
+    std::cout << "a";
+
+
     return 0;
 }

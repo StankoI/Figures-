@@ -5,6 +5,7 @@
 #include "TestStringToFigure.imp"
 #include "TestFigureFromStream.imp"
 #include "TestRandomFigure.imp"
+#include "TestAbstractFactory.imp"
 
 int main()
 {

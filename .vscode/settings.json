@@ -59,6 +59,8 @@
         "streambuf": "cpp",
         "thread": "cpp",
         "typeinfo": "cpp",
-        "*.imp": "cpp"
+        "*.imp": "cpp",
+        "any": "cpp",
+        "codecvt": "cpp"
     }
 }

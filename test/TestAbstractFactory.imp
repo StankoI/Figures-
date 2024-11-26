@@ -1,0 +1,32 @@
+#include "doctest.h"
+#include <typeinfo>
+#include "../include/AbstractFactory.hpp"
+
+// TEST_CASE("AbstractFactory return correct factory")
+// {
+//     AbstractFactory AF;
+
+//     std::unique_ptr<FigureFactory> fact1 = AF.createFactory("random 12");
+//     std::unique_ptr<FigureFactory> fact2 = AF.createFactory("stdin 12");
+//     // std::unique_ptr<FigureFactory> fact3 = AF.createFactory("stream file.txt");
+
+//     REQUIRE(fact1 != nullptr);
+//     REQUIRE(fact2 != nullptr);
+//     // REQUIRE(fact3 != nullptr);
+
+//     CHECK(typeid(*fact1) == typeid(FigureRandom));
+//     CHECK(typeid(*fact2) == typeid(FigureFromSTDIN));
+//     // CHECK(typeid(*fact3) == typeid(FigureFromStream));
+// }
+
+TEST_CASE("RandomFactory works")
+{
+    AbstractFactory AF;
+
+    std::unique_ptr<FigureFactory> fact3 = AF.createFactory("stream file.txt");
+
+    std::unique_ptr<Figure> fig = fact3->create();
+
+    // CHECK(fig != nullptr);
+
+}

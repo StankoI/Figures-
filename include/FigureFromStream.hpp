@@ -5,9 +5,9 @@
 class FigureFromStream : public  FigureFactory
 {
 private:
-    std::fstream& stream;
+    std::istream* stream;
 public:
-    FigureFromStream(std::fstream& s);
+    FigureFromStream(std::istream* s);
     ~FigureFromStream();
     std::unique_ptr<Figure> create() override;
 };

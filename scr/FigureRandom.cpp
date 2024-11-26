@@ -31,9 +31,6 @@ std::unique_ptr<Figure> FigureRandom::create()
     int randomIndex = rand() % figureInfo.size();
     FigureData data = figureInfo.at(randomIndex);
 
-    // std::string figureType = data.type;
-    // std::size_t paramsCount = data.paramsCount;
-
     std::vector<double> params;
 
     for(std::size_t i = 0; i < data.paramsCount; i++)
@@ -44,8 +41,6 @@ std::unique_ptr<Figure> FigureRandom::create()
     std::string figureStr = data.type + ' ' + paramsToString(params); 
 
     StringToFigure STF;
-
-    
 
     std::unique_ptr<Figure> ptr;
 

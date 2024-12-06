@@ -54,7 +54,6 @@ TEST_CASE("Testing random")
             CHECK(a >= 5 );
             CHECK(a <= 9.9);
         }
-
     }
 
     CHECK(circleCount >= N/4);

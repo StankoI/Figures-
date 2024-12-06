@@ -1,20 +1,13 @@
 #include <iostream>
-#include "include/AbstractFactory.hpp"
+#include "include/Aplication.hpp"
 #include <fstream>
 #include <string>
 
 int main()
 {   
-    AbstractFactory AF;
-
-    std::unique_ptr<FigureFactory> ptr = AF.createFactory("stream file.txt");
-
-    std::unique_ptr<Figure> figure1 = ptr->create();
-
-    std::cout << figure1->to_string();
-
-    std::cout << "a";
-
+    Aplication a;
+    a.start();
+    exit(0);
 
     return 0;
 }

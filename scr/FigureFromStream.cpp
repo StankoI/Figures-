@@ -1,4 +1,6 @@
 #include "../include/FigureFromStream.hpp"
+#include "../include/StringToFigure.hpp"
+
 
 FigureFromStream::FigureFromStream(std::istream *s) : stream(s)
 {
@@ -10,34 +12,15 @@ FigureFromStream::FigureFromStream(std::istream *s) : stream(s)
 
 std::unique_ptr<Figure> FigureFromStream::create()
 {
-    if (!stream)
-    {
-        throw std::ios_base::failure("Failed to read from stream");
-    }
+    if (!stream){throw std::ios_base::failure("Failed to read from stream");}
 
-    if (!stream->good())
-    {
-        throw std::ios_base::failure("Stream is not in a good state before reading.");
-    }
-
-    StringToFigure STF;
     std::string str;
+    if(!std::getline(*stream, str)){return nullptr;}
 
-    // stream >> str;
-
-    // std::cout << str;
-
-    std::getline(*stream, str);
-
-    //!
-    try
-    {
-        return STF.stringToFigure(str);
-    }
-    catch (std::exception &e)
-    {
-        throw;
-    }
+    return StringToFigure().stringToFigure(str);
 }
 
-FigureFromStream::~FigureFromStream() {};
+FigureFromStream::~FigureFromStream() 
+{
+    delete this->stream;
+}

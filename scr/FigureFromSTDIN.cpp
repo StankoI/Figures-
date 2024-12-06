@@ -1,4 +1,5 @@
 #include "../include/FigureFromSTDIN.hpp"
+#include "../include/StringToFigure.hpp"
 
 FigureFromSTDIN::FigureFromSTDIN(std::size_t f):numberOfFigures(f){}
 
@@ -6,25 +7,17 @@ FigureFromSTDIN::~FigureFromSTDIN(){}
 
 std::unique_ptr<Figure> FigureFromSTDIN::create()
 {
-    if(numberOfFigures == 0)
+    if(numberOfFigures <= 0)
     {
         return nullptr;
     }
-    StringToFigure STF;
+    
+    std::cout << ">";
     std::string str;
-
+    
     std::getline(std::cin ,str);
-    //!!! PITAI ok li e
-    try{
-        if(numberOfFigures != -1)
-        {
-            numberOfFigures--;
-        }
-        return STF.stringToFigure(str);
-    }
-    catch(std::exception& e)
-    {
-        numberOfFigures++;
-        throw;
-    }
+  
+    auto figure = StringToFigure().stringToFigure(str);
+    numberOfFigures--;
+    return figure;
 }

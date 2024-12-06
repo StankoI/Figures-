@@ -1,5 +1,6 @@
 #pragma once
-#include "StringToFigure.hpp"
+// #include "StringToFigure.hpp"
+#include "Figure.hpp"
 
 class FigureFactory
 {

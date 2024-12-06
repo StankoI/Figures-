@@ -1,27 +1,14 @@
 #include "../include/Rectangle.hpp"
 
-void Rectangle::validator(double a, double b)
+void Rectangle::validate(double a, double b)
 {
-    if(a <= 0 || b <= 0)
-    {
-        throw std::invalid_argument("Side lengths must be positive");
-    }
-
-    if(a+b > std::numeric_limits<double>::max() / 2)
-    {
-        throw std::overflow_error("Sum of the sides exceeds the maximum allowable value for a double");
-    }
+    if(a <= 0 || b <= 0){throw std::invalid_argument("Side lengths must be positive");}
+    if(a+b > std::numeric_limits<double>::max() / 2){ throw std::overflow_error("Sum of the sides exceeds the maximum allowable value for a double");}
 }
 
 Rectangle::Rectangle(double a, double b)
-{
-    try{
-        validator(a,b);
-    }
-    catch(std::exception &e)
-    {
-        throw;
-    }
+{    
+    validate(a,b);
 
     this->sideA = a;
     this->sideB = b;
@@ -34,14 +21,8 @@ Rectangle::Rectangle(const std::vector<double>& v)
         throw std::invalid_argument("number of arguments is invalid");
     }
 
-    try{
-        validator(v[0],v[1]);
-    }
-    catch(std::exception &e)
-    {
-        throw;
-    }
-
+    validate(v[0],v[1]);
+    
     this->sideA = v[0];
     this->sideB = v[1];
 }
@@ -60,5 +41,3 @@ Rectangle* Rectangle::clone() const
 {
     return new Rectangle(*this);
 }
-
-Rectangle::~Rectangle(){};

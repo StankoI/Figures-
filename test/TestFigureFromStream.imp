@@ -5,7 +5,7 @@ TEST_CASE("FigureFromStream returns correct figure")
 {
     std::string a = "triangle 3 4 5 \n rectangle 3 4 \n rectangle 4 5 \n circle 3 \n";
     
-    std::istringstream stream(a);
+    std::istringstream* stream = new std::istringstream(a);
 
     FigureFromStream FFS(stream);
 
@@ -35,7 +35,7 @@ TEST_CASE("FigureFromStream throw exeption with correct messige")
 {
     std::string a = "triangle 3 4 abc \n rectangle 3 abc \n rectangle abc 5 \n circle lk \n circle -2";
 
-    std::istringstream stream(a);
+    std::istringstream* stream = new std::istringstream(a);
 
     FigureFromStream FFS(stream);
 
@@ -44,5 +44,4 @@ TEST_CASE("FigureFromStream throw exeption with correct messige")
     CHECK_THROWS_WITH_AS(FFS.create(), "Invalid value in input string", std::invalid_argument);
     CHECK_THROWS_WITH_AS(FFS.create(), "Invalid value in input string", std::invalid_argument);
     CHECK_THROWS_WITH_AS(FFS.create(), "Error creating circle: Radius lengths must be positive", std::invalid_argument);
-
 }

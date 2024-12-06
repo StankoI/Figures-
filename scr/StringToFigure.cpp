@@ -39,6 +39,22 @@ StringToFigure::StringToFigure()
     };
 }
 
+std::string getFigureType(std::istream& stream)
+{
+    std::string figureType;
+    stream >> figureType;
+    return figureType;
+}
+
+void getParams(std::istream& stream, std::vector<double>& params)
+{
+    double tmp;
+    while (stream >> tmp)
+    {                      
+        params.push_back(tmp);
+    }
+}
+
 std::unique_ptr<Figure> StringToFigure::stringToFigure(std::string str) const
 {
     if (str == "")
@@ -47,28 +63,13 @@ std::unique_ptr<Figure> StringToFigure::stringToFigure(std::string str) const
     }
 
     std::istringstream stream(str);
-
-    std::string figureType;
-
-    stream >> figureType;
+    std::string figureType = getFigureType(stream);
 
     std::vector<double> params;
+    getParams(stream,params);
 
-    double tmp;
-    while (stream >> tmp)
-    {                      
-        params.push_back(tmp);
-    }
-
-    if (!stream.eof())
-    { 
-        throw std::invalid_argument("Invalid value in input string");
-    }
-
-    if (figureFactories.find(figureType) == figureFactories.end())
-    {
-        throw std::invalid_argument("fugure does not exist");
-    }
+    if (!stream.eof()){throw std::invalid_argument("Invalid value in input string");}
+    if (figureFactories.find(figureType) == figureFactories.end()){throw std::invalid_argument("fugure does not exist");}
 
     return figureFactories.at(figureType)(params);
 }

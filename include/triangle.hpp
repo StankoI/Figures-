@@ -8,13 +8,13 @@ private:
     double sideB;
     double sideC;
 private:
-    void validator(double,double,double);
+    void validate(double sideA,double sideB,double sideC);
 public:
 
-    Triangle(double, double, double);
+    Triangle(double sideA, double sideB, double sideC);
     explicit Triangle(const std::vector<double>&);
 
-    ~Triangle();
+    // ~Triangle();
     
     double perimeter() const override; 
     std::string to_string() const override; 

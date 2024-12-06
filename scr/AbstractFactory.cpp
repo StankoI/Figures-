@@ -26,6 +26,7 @@ AbstractFactory::AbstractFactory()
             std::stringstream stream(a);
             std::size_t num;
             stream >> num;
+            
             return std::make_unique<FigureFromSTDIN>(num);
         }
         catch (std::exception &e)
@@ -38,25 +39,18 @@ AbstractFactory::AbstractFactory()
     {
         if (!std::filesystem::exists(a))
         {
-            std::ofstream outFile(a);
-            if (!outFile)
-            {
-                throw std::invalid_argument("Failed to create file: " + a);
-            }
-
-            outFile << "triangle 3 4 5\n";
-            outFile.close();
+            throw std::invalid_argument(a + "does not exist");
         }
 
         try
         {
-            std::ifstream* is = new std::ifstream(a);
+            std::ifstream *is = new std::ifstream(a);
             if (!is->is_open())
             {
                 throw std::invalid_argument("Failed to open file: " + a);
             }
 
-            return std::make_unique<FigureFromStream>(is); 
+            return std::make_unique<FigureFromStream>(is);
         }
         catch (std::exception &e)
         {

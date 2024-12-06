@@ -7,12 +7,11 @@ private:
     double sideA;
     double sideB;
 private:
-    void validator(double, double);
+    void validate(double sideA, double sideB);
 public:
-    Rectangle(double, double);
+    Rectangle(double sideA, double sideB);
     explicit Rectangle(const std::vector<double>&);
-    ~Rectangle();
-    
+
     double perimeter() const override;
     std::string to_string() const override;
     Rectangle* clone() const override;

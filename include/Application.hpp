@@ -1,7 +1,7 @@
 #pragma once
 #include "AbstractFactory.hpp"
 
-class Aplication
+class Application
 {
 private:
     std::vector<std::unique_ptr<Figure>> figures;
@@ -11,8 +11,8 @@ private:
 
 public:
 
-    Aplication();
-    ~Aplication();
+    Application();
+    ~Application();
     
     void start();
 

@@ -4,7 +4,7 @@
 
 //НАЙ-ГНУСНИЯТ ФАЙЛ В ЦЕНИЯ ПРОЕКТ
 
-Aplication::Aplication()
+Application::Application()
 {
     commands["list"] = [](std::string str, std::vector<std::unique_ptr<Figure>>& v)
     {
@@ -69,7 +69,7 @@ Aplication::Aplication()
 
     };
 }
-Aplication::~Aplication() {}
+Application::~Application() {}
 
 std::string getCreationTypeAndParams()
 {
@@ -145,7 +145,7 @@ void writeOpening()
     std::cout << "stream: creates figures from file\n";
 }
 
-void Aplication::start()
+void Application::start()
 {
     writeOpening();
 

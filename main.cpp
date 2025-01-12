@@ -6,7 +6,6 @@
 int main()
 {   
     Application a;
-    // Application a;
     a.start();
     exit(0);
 

@@ -2,8 +2,6 @@
 #include <iostream>
 #include <fstream>
 
-//НАЙ-ГНУСНИЯТ ФАЙЛ В ЦЕНИЯ ПРОЕКТ
-
 Application::Application()
 {
     commands["list"] = [](std::string str, std::vector<std::unique_ptr<Figure>>& v)
@@ -117,7 +115,7 @@ std::string getCreationTypeAndParams()
 
         creationType += ' ' + std::to_string(a);
     }
-    else //(creationType == "stream")
+    else 
     {
         std::cout << "please write the name of the file that you want to create figures from\n";
         std::string a = "";
@@ -188,7 +186,7 @@ void Application::start()
     {   
         std::string par;
         std::cout << ">";
-        // std::getline(std::cin, currCommand);
+        
         std::cin >> currCommand;
 
 
